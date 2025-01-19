@@ -1,28 +1,21 @@
 # Constella - Your Personal Zodiac Guide
 
-Constella is a modern, interactive web application that brings the mystical world of astrology to life. With beautiful animations, personalized horoscopes, and detailed compatibility analysis, Constella helps you explore your astrological journey in style.
+Constella is a modern, interactive web application that brings the mystical world of astrology to life. With beautiful animations and detailed compatibility analysis, Constella helps you explore your astrological journey in style.
 
 ## Features
 
-### Personalized Profile
-- **Zodiac Theme Generator**: Get a unique color theme based on your zodiac sign
-- **Daily Lucky Properties**: Discover your lucky color, number, and time of day
-- **Custom Avatar**: Personalized avatar that reflects your zodiac sign
-- **Daily Affirmations**: Receive inspiring messages tailored to your sign
-
-### Daily Horoscopes
-- **Real-time Predictions**: Get fresh horoscope readings daily
+### Horoscope Features
+- **Daily Predictions**: Get personalized horoscope readings
 - **Multi-day View**: Check horoscopes for yesterday, today, and tomorrow
-- **Lucky Elements**: View your daily lucky properties
-- **Mood Predictions**: Get insights into your daily emotional state
+- **Astrological Insights**: View your mood, compatibility, and lucky elements for the day
 
 ### Compatibility Analysis
 - **Detailed Matching**: Find out how well you match with other signs
-- **Element Harmony**: Understand elemental compatibility
+- **Element Harmony**: Understand elemental compatibility between signs
 - **Relationship Insights**: Get detailed explanations of relationship dynamics
 
 ### Interactive Features
-- **Zodiac Wheel**: Interactive wheel for sign selection
+- **Zodiac Wheel**: Beautiful and interactive wheel for sign selection
 - **Constellation Background**: Dynamic star field animation
 - **Smooth Transitions**: Beautiful animations using Framer Motion
 - **Responsive Design**: Perfect experience on any device
