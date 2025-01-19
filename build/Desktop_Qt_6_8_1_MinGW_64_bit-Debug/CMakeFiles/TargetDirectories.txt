@@ -1,0 +1,9 @@
+C:/Users/aleen/OneDrive/Pictures/Documents/Constella/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/CMakeFiles/Constella.dir
+C:/Users/aleen/OneDrive/Pictures/Documents/Constella/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
+C:/Users/aleen/OneDrive/Pictures/Documents/Constella/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
+C:/Users/aleen/OneDrive/Pictures/Documents/Constella/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/CMakeFiles/list_install_components.dir
+C:/Users/aleen/OneDrive/Pictures/Documents/Constella/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/CMakeFiles/install.dir
+C:/Users/aleen/OneDrive/Pictures/Documents/Constella/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/CMakeFiles/install/local.dir
+C:/Users/aleen/OneDrive/Pictures/Documents/Constella/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/CMakeFiles/install/strip.dir
+C:/Users/aleen/OneDrive/Pictures/Documents/Constella/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/CMakeFiles/Constella_autogen_timestamp_deps.dir
+C:/Users/aleen/OneDrive/Pictures/Documents/Constella/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug/CMakeFiles/Constella_autogen.dir

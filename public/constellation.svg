@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="12" cy="12" r="1.5" fill="#8C7AE6"/>
+  <circle cx="5" cy="8" r="1" fill="#8C7AE6"/>
+  <circle cx="19" cy="8" r="1" fill="#8C7AE6"/>
+  <circle cx="16" cy="18" r="1" fill="#8C7AE6"/>
+  <circle cx="8" cy="18" r="1" fill="#8C7AE6"/>
+  <path d="M12 10.5L5 8M12 10.5L19 8M12 13.5L16 18M12 13.5L8 18" stroke="#8C7AE6" stroke-width="0.5"/>
+  <animateTransform
+    attributeName="transform"
+    type="rotate"
+    from="0 12 12"
+    to="360 12 12"
+    dur="20s"
+    repeatCount="indefinite"
+  />
+</svg>

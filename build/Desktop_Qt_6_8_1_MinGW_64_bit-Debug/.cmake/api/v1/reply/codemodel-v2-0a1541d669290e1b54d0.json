@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-c0abb5f9e5b53f583afd.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Constella",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Constella::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Constella-Debug-ea37d953e949ff2dd655.json",
+					"name" : "Constella",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Constella_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Constella_autogen-Debug-abcb4fa273b3fb7be51c.json",
+					"name" : "Constella_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Constella_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Constella_autogen_timestamp_deps-Debug-a76805e38b5cb9c0ee21.json",
+					"name" : "Constella_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/aleen/OneDrive/Pictures/Documents/Constella/build/Desktop_Qt_6_8_1_MinGW_64_bit-Debug",
+		"source" : "C:/Users/aleen/OneDrive/Pictures/Documents/Constella"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-constellation-dark text-constellation-light;
+    font-family: 'Quicksand', sans-serif;
+  }
+}
+
+.nav-link {
+  @apply px-3 py-2 rounded-lg text-constellation-light hover:bg-constellation-accent/10 transition-colors;
+}
+
+.nav-link.active {
+  @apply bg-constellation-accent/20 text-constellation-accent;
+}
