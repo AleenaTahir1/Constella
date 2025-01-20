@@ -1,57 +1,100 @@
 import { Link, useLocation } from 'react-router-dom'
-import { useZodiac } from '../../context/ZodiacContext'
+import { motion } from 'framer-motion'
 
 function Navbar() {
-  const { userZodiac } = useZodiac()
   const location = useLocation()
 
+  const navItems = [
+    { path: '/profile', label: 'Profile' },
+    { path: '/compatibility', label: 'Compatibility' },
+    { path: '/horoscope', label: 'Horoscope' },
+    { path: '/theme', label: 'Theme', isNew: true }
+  ]
+
   return (
-    <nav className="bg-constellation-dark/50 backdrop-blur-lg border-b border-constellation-accent/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="bg-constellation-dark/80 backdrop-blur-lg border-b border-constellation-accent/10">
+      <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
+          {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <svg
-              className="w-8 h-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="12" cy="12" r="3" fill="currentColor" className="text-constellation-accent" />
-              <path
-                d="M12 2L14.5 9.5M12 2L9.5 9.5M12 22L14.5 14.5M12 22L9.5 14.5M2 12L9.5 14.5M2 12L9.5 9.5M22 12L14.5 14.5M22 12L14.5 9.5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                className="text-constellation-accent"
-              />
-            </svg>
-            <span className="text-xl font-semibold tracking-wider text-constellation-light">
+            <div className="w-8 h-8">
+              <motion.svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-full h-full text-constellation-accent"
+              >
+                <path
+                  d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+                  fill="currentColor"
+                />
+              </motion.svg>
+            </div>
+            <span className="text-xl font-bold bg-gradient-to-r from-constellation-accent to-purple-400 bg-clip-text text-transparent">
               Constella
             </span>
           </Link>
 
-          <div className="flex items-center space-x-4">
-            {userZodiac && (
-              <>
-                <Link
-                  to="/profile"
-                  className={`nav-link ${location.pathname === '/profile' ? 'active' : ''}`}
-                >
-                  Profile
-                </Link>
-                <Link
-                  to="/compatibility"
-                  className={`nav-link ${location.pathname === '/compatibility' ? 'active' : ''}`}
-                >
-                  Compatibility
-                </Link>
-                <Link
-                  to="/horoscope"
-                  className="px-3 py-2 rounded-lg text-constellation-light hover:bg-constellation-accent/10 transition-colors"
-                >
-                  Horoscope
-                </Link>
-              </>
-            )}
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-1">
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`px-4 py-2 rounded-lg transition-colors relative ${
+                  location.pathname === item.path
+                    ? 'bg-constellation-accent text-white'
+                    : 'text-constellation-light hover:bg-constellation-accent/10'
+                }`}
+              >
+                {item.label}
+                {item.isNew && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-1 -right-1 w-2 h-2 bg-purple-400 rounded-full"
+                  />
+                )}
+              </Link>
+            ))}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button className="p-2 rounded-lg text-constellation-light hover:bg-constellation-accent/10">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        <div className="md:hidden">
+          <div className="px-2 pt-2 pb-3 space-y-1">
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`block px-3 py-2 rounded-lg transition-colors ${
+                  location.pathname === item.path
+                    ? 'bg-constellation-accent text-white'
+                    : 'text-constellation-light hover:bg-constellation-accent/10'
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

@@ -2,11 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --theme-background: none;
+}
+
 @layer base {
   body {
     @apply bg-constellation-dark text-constellation-light;
     font-family: 'Quicksand', sans-serif;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+}
+
+.theme-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: var(--theme-background);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.15;
+  transition: background-image 0.5s ease-in-out;
 }
 
 .nav-link {
