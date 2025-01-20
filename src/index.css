@@ -10,42 +10,62 @@
 @layer base {
   body {
     @apply bg-constellation-dark text-constellation-light;
-    font-family: 'Quicksand', sans-serif;
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  #root {
+    min-height: 100vh;
+    position: relative;
   }
 }
 
+/* Theme Background */
 .theme-background {
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
   background-image: var(--theme-background);
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   opacity: var(--theme-opacity);
   transition: all 0.5s ease-in-out;
 }
 
-.theme-background::after {
-  content: '';
+.theme-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5));
+  background: linear-gradient(
+    to bottom,
+    rgba(13, 12, 34, 0.85),
+    rgba(13, 12, 34, 0.95)
+  );
   pointer-events: none;
 }
 
+/* Navigation */
 .nav-link {
   @apply px-3 py-2 rounded-lg text-constellation-light hover:bg-constellation-accent/10 transition-colors;
 }
 
 .nav-link.active {
   @apply bg-constellation-accent text-white;
+}
+
+/* Particle Effects Layer */
+#tsparticles {
+  position: fixed !important;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
 }

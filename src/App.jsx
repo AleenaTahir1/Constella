@@ -17,23 +17,31 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-constellation-dark text-white relative">
-      <div className="theme-background" />
-      <ParticleField />
-      <div className="relative z-10">
-        <Navbar />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<ZodiacProfile />} />
-            <Route path="/compatibility" element={<Compatibility />} />
-            <Route path="/horoscope" element={<Horoscope />} />
-            <Route path="/theme" element={<ThemeGenerator />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
+    <>
+      {/* Theme Background */}
+      <div className="fixed inset-0 w-full h-full">
+        <div className="theme-background" />
+        <div className="theme-overlay" />
       </div>
-    </div>
+
+      {/* Main Content */}
+      <div className="relative min-h-screen">
+        <ParticleField />
+        <div className="relative z-10">
+          <Navbar />
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/profile" element={<ZodiacProfile />} />
+              <Route path="/compatibility" element={<Compatibility />} />
+              <Route path="/horoscope" element={<Horoscope />} />
+              <Route path="/theme" element={<ThemeGenerator />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+        </div>
+      </div>
+    </>
   )
 }
 
