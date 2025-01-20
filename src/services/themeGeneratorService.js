@@ -25,28 +25,45 @@ export async function generateThemeImage(prompt) {
 }
 
 export function applyTheme(imageUrl, opacity = 0.25) {
-  // Apply the theme with a backdrop filter for better text readability
-  document.documentElement.style.setProperty('--theme-background', `url("${imageUrl}")`)
-  document.documentElement.style.setProperty('--theme-opacity', opacity.toString())
-  
-  // Save theme preferences
-  localStorage.setItem('constella-theme-background', imageUrl)
-  localStorage.setItem('constella-theme-opacity', opacity.toString())
-  
-  // Force a repaint to ensure the theme is applied
-  document.body.style.display = 'none'
-  document.body.offsetHeight // Force repaint
-  document.body.style.display = ''
+  try {
+    // Ensure the image URL is properly formatted for CSS
+    const formattedUrl = imageUrl.includes('"') ? imageUrl : `"${imageUrl}"`
+    const backgroundValue = `url(${formattedUrl})`
+    
+    // Apply theme to root element
+    document.documentElement.style.setProperty('--theme-background', backgroundValue)
+    document.documentElement.style.setProperty('--theme-opacity', opacity.toString())
+    
+    // Save theme preferences
+    localStorage.setItem('constella-theme-background', imageUrl)
+    localStorage.setItem('constella-theme-opacity', opacity.toString())
+    
+    console.log('Theme applied:', {
+      background: backgroundValue,
+      opacity: opacity
+    })
+  } catch (error) {
+    console.error('Error applying theme:', error)
+    // If there's an error, try to apply the default theme
+    applyTheme(DEFAULT_THEMES.cosmic, opacity)
+  }
 }
 
 export function loadSavedTheme() {
-  const savedTheme = localStorage.getItem('constella-theme-background')
-  const savedOpacity = parseFloat(localStorage.getItem('constella-theme-opacity')) || 0.25
-  
-  if (savedTheme) {
-    applyTheme(savedTheme, savedOpacity)
-  } else {
-    // Apply default theme if no theme is saved
-    applyTheme(DEFAULT_THEMES.cosmic)
+  try {
+    const savedTheme = localStorage.getItem('constella-theme-background')
+    const savedOpacity = parseFloat(localStorage.getItem('constella-theme-opacity')) || 0.25
+    
+    if (savedTheme) {
+      console.log('Loading saved theme:', savedTheme)
+      applyTheme(savedTheme, savedOpacity)
+    } else {
+      console.log('No saved theme found, applying default theme')
+      applyTheme(DEFAULT_THEMES.cosmic, 0.25)
+    }
+  } catch (error) {
+    console.error('Error loading theme:', error)
+    // If there's an error, apply the default theme
+    applyTheme(DEFAULT_THEMES.cosmic, 0.25)
   }
 }
