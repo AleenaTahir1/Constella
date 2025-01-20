@@ -1,6 +1,6 @@
 <div align="center">
 
-# ✨ Constella ✨
+# ✨ Constella - Your Personal Zodiac Guide 🌟
 
 <img src="public/constellation.svg" alt="Constella Logo" width="150px"/>
 
@@ -17,30 +17,65 @@
 
 ### 🌌 Explore the Stars, Discover Your Path 🌠
 
-Constella is your magical gateway to the cosmos! ✨ With stunning animations and mystical insights, 
-let the stars guide you through your astrological journey.
+Constella is an elegant and interactive web application that brings the mystical world of astrology to your fingertips. With its beautiful cosmic design and intuitive interface, Constella helps you explore your zodiac profile, check compatibility, and discover daily horoscopes.
 
 </div>
 
-## 🎇 What Makes Constella Special?
+## ✨ Features
 
-### 🔮 Daily Celestial Guidance
-- **Mystical Predictions** - Discover what the stars have in store for you! 🌟
-- **Time Travel** - Peek into yesterday, today, and tomorrow's cosmic vibes 🕰️
-- **Cosmic Insights** - Uncover your mood, compatibility, and lucky elements ⭐
+### 🎨 Theme Customization
+- **Theme Generator**: Create unique cosmic themes using AI-powered image generation
+- **Default Themes**: Choose from a collection of pre-designed cosmic themes
+- **Live Preview**: See how your theme will look before applying
+- **Adjustable Opacity**: Fine-tune the background opacity to your preference
+- **Particle Animation**: Beautiful interactive particle effects that complement your theme
 
-### 💫 Love & Harmony
-- **Match Made in the Stars** - Find your celestial soulmate! 💝
-- **Elemental Magic** - See how your elements dance together ✨
-- **Relationship Secrets** - Let the stars guide your heart 💕
+### 🔮 Zodiac Profile
+- Personal zodiac sign details
+- Trait analysis and characteristics
+- Element and quality information
+- Lucky numbers, days, and colors
 
-### 🌟 Magical Experience
-- **Enchanted Zodiac Wheel** - Spin through the stars in style 🎡
-- **Living Constellations** - Watch the stars twinkle and dance ⭐
-- **Smooth as Stardust** - Flow through the cosmos with graceful animations 🌠
-- **Cosmic Responsive** - Perfect on any device in the universe 📱
+### ❤️ Compatibility Checker
+- Compare zodiac signs for relationship insights
+- Detailed compatibility analysis
+- Strength and challenge areas
+- Relationship advice based on zodiac combinations
 
-## 🚀 Begin Your Cosmic Journey
+### 🌙 Daily Horoscope
+- Daily predictions and guidance
+- Love, career, and health forecasts
+- Lucky elements of the day
+- Mood and energy level indicators
+
+### 🎯 User Experience
+- **Responsive Design**: Works seamlessly on all devices
+- **Intuitive Navigation**: Easy-to-use interface with smooth transitions
+- **Dynamic Animations**: Engaging visual feedback and interactions
+- **Personalized Experience**: Save preferences and favorite themes
+
+## 🛠️ Technical Features
+
+### Frontend
+- Built with React and Vite for optimal performance
+- Framer Motion for smooth animations
+- TailwindCSS for modern, responsive styling
+- Custom hooks for state management
+- Particle.js for interactive background effects
+
+### API Integration
+- AI-powered theme generation using Pollinations API
+- Horoscope data integration
+- Real-time compatibility calculations
+- Secure API handling
+
+### Performance
+- Lazy loading for optimal resource management
+- Efficient state management
+- Smooth transitions and animations
+- Responsive image handling
+
+## 🚀 Getting Started
 
 ```bash
 # Clone this magical repository
@@ -58,23 +93,14 @@ npm run dev
 
 Then open your portal (browser) to `http://localhost:5173` ✨
 
-## 💫 Cosmic Technology
+## 🎨 Theme Customization Guide
 
-- ⚛️ **React** - For building our celestial interface
-- 🎨 **TailwindCSS** - Painting with stardust
-- ✨ **Framer Motion** - Adding cosmic movements
-- 🔮 **React Context** - Managing our celestial state
-- 🚀 **Vite** - Powering our cosmic development
-- ⭐ **Vercel** - Hosting our constellation
-
-## 🌈 Cosmic Design
-
-Our celestial sanctuary features:
-- 🌌 Dark cosmic theme
-- 🔮 Glassmorphic starlit cards
-- 🌈 Magical gradient accents
-- ⭐ Twinkling constellation animations
-- 🎇 Smooth celestial transitions
+1. Navigate to the Theme Generator page
+2. Choose a pre-designed theme or create your own:
+   - Enter a description for your desired theme
+   - Click "Generate" to create a custom theme
+   - Adjust opacity using the slider
+   - Click "Apply Theme" to set your new background
 
 ## 🤝 Join Our Constellation
 
