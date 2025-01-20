@@ -7,28 +7,35 @@ export default {
   theme: {
     extend: {
       colors: {
-        constellation: {
-          primary: '#1a1b4b',
-          secondary: '#4a4e8c',
-          accent: '#8c7ae6',
+        'constellation': {
+          dark: '#1a1b2e',
           light: '#e2e8f0',
-          dark: '#0f172a',
+          accent: '#8b5cf6',
         },
+        'cosmic': {
+          pink: {
+            light: '#ff80bf',
+            DEFAULT: '#ff3399',
+            dark: '#cc0066'
+          },
+          purple: {
+            light: '#b794f4',
+            DEFAULT: '#805ad5',
+            dark: '#553c9a'
+          },
+          indigo: {
+            light: '#7f9cf5',
+            DEFAULT: '#5a67d8',
+            dark: '#434190'
+          }
+        }
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },
       animation: {
-        'twinkle': 'twinkle 1.5s ease-in-out infinite',
-        'float': 'float 6s ease-in-out infinite',
-      },
-      keyframes: {
-        twinkle: {
-          '0%, 100%': { opacity: 1 },
-          '50%': { opacity: 0.3 },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-20px)' },
-        },
-      },
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      }
     },
   },
   plugins: [],

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useZodiac } from '../context/ZodiacContext'
+import { motion } from 'framer-motion'
 import FloatingCard from '../components/ui/FloatingCard'
 
 function Home() {
@@ -74,30 +75,50 @@ function Home() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-4">
-      <h1 className="text-7xl font-bold mb-6">
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-constellation-accent via-purple-500 to-pink-500">
-          Constella
-        </span>
-      </h1>
+    <div className="min-h-screen flex flex-col items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="text-center space-y-12 max-w-2xl w-full"
+      >
+        {/* Title with gradient and glow effect */}
+        <h1 className="text-6xl font-bold relative">
+          <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent 
+            filter drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]">
+            Constella
+          </span>
+        </h1>
 
-      <p className="text-xl mb-12 max-w-2xl text-constellation-light/90">
-        Discover your celestial identity by entering your birth date below.
-      </p>
+        {/* Subtitle with different gradient */}
+        <p className="text-xl bg-gradient-to-r from-pink-200 via-purple-200 to-indigo-200 bg-clip-text text-transparent">
+          Discover your celestial identity by entering your birth date below.
+        </p>
 
-      <FloatingCard className="w-full max-w-md p-8 mb-8">
-        <div className="space-y-6">
-          <div>
-            <label htmlFor="birthdate" className="block text-lg mb-2">
+        {/* Form with enhanced styling */}
+        <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
+          <div className="space-y-2">
+            <label className="block text-pink-200 text-lg">
               Enter your birth date
             </label>
-            <input
-              type="date"
-              id="birthdate"
-              value={birthDate}
-              onChange={handleDateChange}
-              className="w-full px-4 py-2 rounded-lg bg-constellation-dark/50 border border-constellation-accent/30 focus:border-constellation-accent focus:outline-none"
-            />
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="relative group"
+            >
+              <input
+                type="date"
+                value={birthDate}
+                onChange={handleDateChange}
+                className="w-full px-6 py-4 bg-indigo-900/40 border-2 border-purple-400/30 rounded-lg
+                  text-white placeholder-purple-300 focus:outline-none focus:border-purple-400
+                  transition-all duration-300 backdrop-blur-sm
+                  group-hover:border-purple-400/50 group-hover:bg-indigo-900/50"
+                required
+              />
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-indigo-500/20 
+                opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+            </motion.div>
           </div>
 
           {zodiacInfo && (
@@ -111,16 +132,22 @@ function Home() {
                 </p>
               </div>
 
-              <button
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full py-4 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500
+                  text-white font-semibold rounded-lg shadow-lg
+                  hover:from-pink-600 hover:via-purple-600 hover:to-indigo-600
+                  transition-all duration-300
+                  focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50"
                 onClick={handleContinue}
-                className="w-full px-6 py-3 rounded-lg bg-constellation-accent hover:bg-constellation-accent/80 transition-colors text-white font-semibold"
               >
                 Continue to Your Profile
-              </button>
+              </motion.button>
             </div>
           )}
-        </div>
-      </FloatingCard>
+        </form>
+      </motion.div>
     </div>
   )
 }
