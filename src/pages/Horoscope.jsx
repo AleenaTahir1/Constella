@@ -12,14 +12,18 @@ function Horoscope() {
 
   useEffect(() => {
     async function fetchHoroscope() {
+      console.log('Fetching horoscope with:', { userZodiac, birthDate, selectedDay })
+      
       if (!userZodiac) {
-        setError('Please set your zodiac sign first')
+        console.log('No zodiac sign found')
+        setError('Please set your zodiac sign in your profile first')
         setLoading(false)
         return
       }
 
       if (!birthDate) {
-        setError('Please set your birth date first')
+        console.log('No birth date found')
+        setError('Please set your birth date in your profile first')
         setLoading(false)
         return
       }
@@ -28,10 +32,11 @@ function Horoscope() {
         setLoading(true)
         setError(null)
         const data = await getCachedHoroscope(userZodiac, selectedDay, birthDate)
+        console.log('Horoscope data received:', data)
         setHoroscope(data)
       } catch (error) {
         console.error('Failed to fetch horoscope:', error)
-        setError('Failed to load your horoscope. Please try again later.')
+        setError('Unable to load your horoscope. Please make sure your zodiac sign and birth date are set correctly.')
       } finally {
         setLoading(false)
       }
@@ -43,9 +48,23 @@ function Horoscope() {
   if (!userZodiac || !birthDate) {
     return (
       <div className="min-h-screen bg-constellation-dark flex items-center justify-center">
-        <p className="text-constellation-light text-lg">
-          Please set your birth date and zodiac sign in your profile
-        </p>
+        <div className="text-center p-8">
+          <p className="text-constellation-light text-lg mb-4">
+            {!userZodiac && !birthDate 
+              ? "Please set your birth date and zodiac sign in your profile"
+              : !userZodiac 
+                ? "Please set your zodiac sign in your profile"
+                : "Please set your birth date in your profile"}
+          </p>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => window.location.href = '/profile'}
+            className="px-6 py-2 bg-constellation-accent text-white rounded-full hover:bg-constellation-accent/90 transition-colors"
+          >
+            Go to Profile
+          </motion.button>
+        </div>
       </div>
     )
   }
@@ -97,7 +116,15 @@ function Horoscope() {
               exit={{ opacity: 0 }}
               className="text-red-400 text-center py-8"
             >
-              {error}
+              <p className="mb-4">{error}</p>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => window.location.href = '/profile'}
+                className="px-6 py-2 bg-constellation-accent text-white rounded-full hover:bg-constellation-accent/90 transition-colors"
+              >
+                Update Profile
+              </motion.button>
             </motion.div>
           ) : horoscope ? (
             <motion.div
@@ -111,7 +138,7 @@ function Horoscope() {
               {/* Main Prediction */}
               <div className="bg-constellation-dark/40 backdrop-blur-xl rounded-xl p-8 border border-constellation-accent/10">
                 <h2 className="text-2xl font-semibold mb-4 text-constellation-accent">
-                  Daily Prediction
+                  Daily Prediction for {userZodiac}
                 </h2>
                 <p className="text-lg leading-relaxed text-constellation-light">
                   {horoscope.description}

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 
 const ZodiacContext = createContext()
 
@@ -11,8 +11,28 @@ export const useZodiac = () => {
 }
 
 export function ZodiacProvider({ children }) {
-  const [userZodiac, setUserZodiac] = useState(null)
-  const [birthDate, setBirthDate] = useState(null)
+  const [userZodiac, setUserZodiac] = useState(() => {
+    const saved = localStorage.getItem('userZodiac')
+    console.log('Initial userZodiac from localStorage:', saved)
+    return saved || null
+  })
+
+  const [birthDate, setBirthDate] = useState(() => {
+    const saved = localStorage.getItem('birthDate')
+    console.log('Initial birthDate from localStorage:', saved)
+    return saved || null
+  })
+
+  useEffect(() => {
+    console.log('Saving userZodiac to localStorage:', userZodiac)
+    localStorage.setItem('userZodiac', userZodiac)
+  }, [userZodiac])
+
+  useEffect(() => {
+    console.log('Saving birthDate to localStorage:', birthDate)
+    localStorage.setItem('birthDate', birthDate)
+  }, [birthDate])
+
   const [theme, setTheme] = useState('dark')
   const [customizations, setCustomizations] = useState({
     background: null,
