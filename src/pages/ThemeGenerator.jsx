@@ -9,28 +9,38 @@ export default function ThemeGenerator() {
   const [loading, setLoading] = useState(false)
 
   const handleGenerateTheme = async () => {
+    if (!prompt.trim()) {
+      alert('Please enter a description for your theme')
+      return
+    }
+
     try {
       setLoading(true)
-      const imageUrl = await generateThemeImage(prompt || 'cosmic night sky with stars')
+      const imageUrl = await generateThemeImage(prompt)
+      console.log('Generated theme URL:', imageUrl) // Debug log
+      
+      // Set the image and immediately apply it
       setGeneratedImage(imageUrl)
-      // Apply theme immediately when generated
       applyTheme(imageUrl, opacity)
+      
     } catch (error) {
       console.error('Error generating theme:', error)
+      alert('Failed to generate theme. Please try again.')
     } finally {
       setLoading(false)
     }
   }
 
-  const handleApplyTheme = () => {
+  const handleOpacityChange = (newOpacity) => {
+    setOpacity(newOpacity)
     if (generatedImage) {
-      applyTheme(generatedImage, opacity)
+      applyTheme(generatedImage, newOpacity)
     }
   }
 
   const handleDefaultTheme = (themeUrl) => {
+    console.log('Applying default theme:', themeUrl) // Debug log
     setGeneratedImage(themeUrl)
-    // Apply theme immediately when selected
     applyTheme(themeUrl, opacity)
   }
 
@@ -110,14 +120,7 @@ export default function ThemeGenerator() {
                     max="1"
                     step="0.1"
                     value={opacity}
-                    onChange={(e) => {
-                      const newOpacity = parseFloat(e.target.value)
-                      setOpacity(newOpacity)
-                      // Apply opacity change immediately
-                      if (generatedImage) {
-                        applyTheme(generatedImage, newOpacity)
-                      }
-                    }}
+                    onChange={(e) => handleOpacityChange(parseFloat(e.target.value))}
                     className="w-full accent-constellation-accent"
                   />
                 </div>
@@ -126,7 +129,7 @@ export default function ThemeGenerator() {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={handleApplyTheme}
+                  onClick={() => handleDefaultTheme(generatedImage)}
                   className="w-full py-3 bg-constellation-accent text-white rounded-lg hover:bg-constellation-accent/80 transition-colors"
                 >
                   Apply Theme

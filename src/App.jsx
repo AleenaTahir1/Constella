@@ -7,29 +7,39 @@ import ThemeGenerator from './pages/ThemeGenerator'
 import NotFound from './pages/NotFound'
 import ParticleField from './components/effects/ParticleField'
 import Navbar from './components/layout/Navbar'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { loadSavedTheme, DEFAULT_THEMES } from './services/themeGeneratorService'
 
 function App() {
   const [background, setBackground] = useState(DEFAULT_THEMES.cosmic)
   const [opacity, setOpacity] = useState(0.7)
 
+  const handleThemeChange = useCallback((event) => {
+    console.log('Theme change event received:', event.detail)
+    setBackground(event.detail.background)
+    setOpacity(event.detail.opacity)
+  }, [])
+
   useEffect(() => {
     // Load saved theme on startup
-    const savedBg = localStorage.getItem('constella-theme-background')
-    const savedOpacity = localStorage.getItem('constella-theme-opacity')
-    
-    if (savedBg) {
-      setBackground(savedBg)
-      setOpacity(parseFloat(savedOpacity) || 0.7)
-    }
+    loadSavedTheme()
 
     // Listen for theme changes
-    window.addEventListener('themeChanged', (e) => {
-      setBackground(e.detail.background)
-      setOpacity(e.detail.opacity)
-    })
-  }, [])
+    window.addEventListener('themeChanged', handleThemeChange)
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('themeChanged', handleThemeChange)
+    }
+  }, [handleThemeChange])
+
+  // Force background image preload
+  useEffect(() => {
+    if (background) {
+      const img = new Image()
+      img.src = background
+    }
+  }, [background])
 
   return (
     <div className="min-h-screen flex flex-col bg-constellation-dark">
@@ -40,7 +50,8 @@ function App() {
           backgroundImage: `url('${background}')`,
           opacity: opacity,
           transform: 'scale(1.1)', // Slight zoom for better coverage
-          filter: 'brightness(1.1) contrast(1.1)' // Enhanced visuals
+          filter: 'brightness(1.1) contrast(1.1)', // Enhanced visuals
+          willChange: 'opacity, background-image' // Performance optimization
         }}
       />
       

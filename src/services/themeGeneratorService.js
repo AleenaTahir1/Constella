@@ -11,11 +11,14 @@ export async function generateThemeImage(prompt) {
     const enhancedPrompt = `${prompt.toLowerCase().replace(/\s+/g, '-')}-ultra-high-quality-4k-resolution-detailed-cosmic-theme-professional-photography-high-detail`
     const imageUrl = `https://image.pollinations.ai/prompt/${enhancedPrompt}?width=3840&height=2160&nologo=true&seed=${Math.floor(Math.random() * 1000)}&quality=100`
     
-    // First check if the image is available
-    const response = await fetch(imageUrl, { method: 'HEAD' })
-    if (!response.ok) {
-      throw new Error('Failed to generate theme image')
-    }
+    // Preload the image
+    const img = new Image()
+    img.src = imageUrl
+    
+    await new Promise((resolve, reject) => {
+      img.onload = resolve
+      img.onerror = () => reject(new Error('Failed to load image'))
+    })
     
     return imageUrl
   } catch (error) {
@@ -26,7 +29,6 @@ export async function generateThemeImage(prompt) {
 
 export function applyTheme(imageUrl, opacity = 0.7) {
   try {
-    // Ensure we have a valid image URL
     if (!imageUrl) {
       console.error('No image URL provided')
       return
@@ -40,19 +42,29 @@ export function applyTheme(imageUrl, opacity = 0.7) {
     localStorage.setItem('constella-theme-opacity', opacity.toString())
     
     // Dispatch theme change event
-    window.dispatchEvent(new CustomEvent('themeChanged', {
+    const event = new CustomEvent('themeChanged', {
       detail: {
         background: cleanUrl,
         opacity: opacity
       }
-    }))
+    })
+    
+    window.dispatchEvent(event)
+    
+    // Force a repaint to ensure the theme is applied
+    document.body.style.display = 'none'
+    document.body.offsetHeight // Force repaint
+    document.body.style.display = ''
     
     console.log('Theme applied successfully:', {
       background: cleanUrl,
       opacity: opacity
     })
+    
+    return true
   } catch (error) {
     console.error('Error applying theme:', error)
+    return false
   }
 }
 
@@ -64,14 +76,14 @@ export function loadSavedTheme() {
     
     if (savedTheme) {
       console.log('Loading saved theme:', savedTheme)
-      applyTheme(savedTheme, savedOpacity)
+      return applyTheme(savedTheme, savedOpacity)
     } else {
       console.log('No saved theme found, applying default cosmic theme')
-      applyTheme(DEFAULT_THEMES.cosmic, 0.7)
+      return applyTheme(DEFAULT_THEMES.cosmic, 0.7)
     }
   } catch (error) {
     console.error('Error loading theme:', error)
     // Fallback to default theme
-    applyTheme(DEFAULT_THEMES.cosmic, 0.7)
+    return applyTheme(DEFAULT_THEMES.cosmic, 0.7)
   }
 }
