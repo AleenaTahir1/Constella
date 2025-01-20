@@ -1,159 +1,85 @@
-// Fallback horoscope data in case API fails
-const fallbackHoroscopes = {
-  aries: {
-    description: "Today is a powerful day for taking initiative. Your natural leadership abilities are heightened, making it an excellent time for starting new projects or inspiring others.",
-    mood: "Energetic",
-    color: "Red",
-    lucky_number: "9",
-    lucky_time: "8:00 AM",
-    compatibility: "Leo"
-  },
-  taurus: {
-    description: "Focus on practical matters today. Your natural ability to create comfort and stability will help you make important decisions about your resources and relationships.",
-    mood: "Determined",
-    color: "Green",
-    lucky_number: "6",
-    lucky_time: "5:30 PM",
-    compatibility: "Virgo"
-  },
-  gemini: {
-    description: "Your communication skills are particularly sharp today. Use this time to express your ideas and connect with others. Learning opportunities are abundant.",
-    mood: "Curious",
-    color: "Yellow",
-    lucky_number: "5",
-    lucky_time: "3:00 PM",
-    compatibility: "Libra"
-  },
-  cancer: {
-    description: "Trust your intuition today. Your emotional intelligence will guide you through important decisions. Focus on home and family matters.",
-    mood: "Intuitive",
-    color: "Silver",
-    lucky_number: "2",
-    lucky_time: "10:00 PM",
-    compatibility: "Scorpio"
-  },
-  leo: {
-    description: "Your natural charisma is magnified today. Use this energy to inspire others and pursue your creative passions. Leadership opportunities may arise.",
-    mood: "Confident",
-    color: "Gold",
-    lucky_number: "1",
-    lucky_time: "12:00 PM",
-    compatibility: "Aries"
-  },
-  virgo: {
-    description: "Your analytical skills are heightened today. Perfect time for organizing, planning, and paying attention to details. Health and wellness are in focus.",
-    mood: "Analytical",
-    color: "Navy",
-    lucky_number: "4",
-    lucky_time: "7:00 AM",
-    compatibility: "Taurus"
-  },
-  libra: {
-    description: "Harmony and balance are key themes today. Your diplomatic skills will help resolve conflicts and strengthen relationships. Focus on partnerships.",
-    mood: "Harmonious",
-    color: "Pink",
-    lucky_number: "7",
-    lucky_time: "6:30 PM",
-    compatibility: "Gemini"
-  },
-  scorpio: {
-    description: "Your investigative nature is enhanced today. Perfect for solving mysteries or diving deep into research. Transformation is possible in key areas of life.",
-    mood: "Mysterious",
-    color: "Maroon",
-    lucky_number: "8",
-    lucky_time: "9:00 PM",
-    compatibility: "Cancer"
-  },
-  sagittarius: {
-    description: "Adventure calls today! Your optimistic outlook will open new doors. Perfect time for travel, learning, or exploring philosophical ideas.",
-    mood: "Adventurous",
-    color: "Purple",
-    lucky_number: "3",
-    lucky_time: "4:00 PM",
-    compatibility: "Aquarius"
-  },
-  capricorn: {
-    description: "Focus on your goals today. Your disciplined approach will help you make significant progress in your career or long-term projects.",
-    mood: "Ambitious",
-    color: "Brown",
-    lucky_number: "8",
-    lucky_time: "8:00 AM",
-    compatibility: "Taurus"
-  },
-  aquarius: {
-    description: "Your innovative ideas are flowing today. Perfect time for brainstorming or connecting with like-minded individuals. Embrace your uniqueness.",
-    mood: "Inventive",
-    color: "Electric Blue",
-    lucky_number: "11",
-    lucky_time: "2:00 PM",
-    compatibility: "Gemini"
-  },
-  pisces: {
-    description: "Your creativity and intuition are heightened today. Perfect for artistic pursuits or spiritual practices. Pay attention to your dreams.",
-    mood: "Creative",
-    color: "Sea Green",
-    lucky_number: "7",
-    lucky_time: "11:00 PM",
-    compatibility: "Scorpio"
-  }
-}
-
 import { calculateLuckyProperties } from './astrologicalCalculations'
 
-// Fallback data in case API fails
-const fallbackDescriptions = {
-  aries: "Today is a day of new beginnings. Your natural leadership abilities will shine through.",
-  taurus: "Focus on stability and growth today. Your practical nature will help you achieve your goals.",
-  gemini: "Communication is key today. Your adaptable nature will help you navigate challenges.",
-  cancer: "Trust your intuition today. Your emotional intelligence will guide you well.",
-  leo: "Your creative energy is at its peak. Express yourself boldly and confidently.",
-  virgo: "Pay attention to details today. Your analytical skills will prove valuable.",
-  libra: "Seek balance in all things today. Your diplomatic nature will help resolve conflicts.",
-  scorpio: "Trust your instincts today. Your determination will lead to success.",
-  sagittarius: "Adventure calls today. Your optimistic outlook will open new doors.",
-  capricorn: "Focus on your goals today. Your disciplined approach will yield results.",
-  aquarius: "Innovation is key today. Your unique perspective will bring fresh solutions.",
-  pisces: "Listen to your inner voice today. Your intuitive nature will guide you well."
+// Horoscope descriptions for different days
+const horoscopeDescriptions = {
+  aries: {
+    yesterday: "Yesterday was about reflection. Your pioneering spirit helped you overcome challenges.",
+    today: "Your natural leadership abilities are shining through today. Take initiative on projects you've been hesitating about.",
+    tomorrow: "Tomorrow brings exciting opportunities. Your courage will help you seize the moment."
+  },
+  taurus: {
+    yesterday: "Your practical approach yesterday led to tangible results. Stability was your strength.",
+    today: "Focus on growth and material success today. Your determination will help you achieve your goals.",
+    tomorrow: "New opportunities for financial growth appear tomorrow. Trust your instincts about resources."
+  },
+  gemini: {
+    yesterday: "Your adaptability served you well yesterday. Communication brought unexpected benefits.",
+    today: "Your quick wit and versatility are your greatest assets today. Express your ideas freely.",
+    tomorrow: "Tomorrow brings interesting conversations and connections. Stay open to different perspectives."
+  },
+  cancer: {
+    yesterday: "Your intuition guided you well yesterday. Emotional connections were strengthened.",
+    today: "Trust your feelings today. Your emotional intelligence will help navigate important decisions.",
+    tomorrow: "Tomorrow brings emotional clarity. Family connections will be especially important."
+  },
+  leo: {
+    yesterday: "Your confidence illuminated the path for others yesterday. Leadership came naturally.",
+    today: "Your creative energy is at its peak. Express yourself boldly and inspire others.",
+    tomorrow: "Tomorrow brings opportunities to shine. Your natural charisma will attract positive attention."
+  },
+  virgo: {
+    yesterday: "Your attention to detail made a difference yesterday. Precision led to success.",
+    today: "Focus on organizing and planning. Your analytical skills will prove invaluable.",
+    tomorrow: "Tomorrow brings chances to perfect your methods. Pay attention to the small details."
+  },
+  libra: {
+    yesterday: "Your diplomatic skills resolved tensions yesterday. Harmony was restored through your efforts.",
+    today: "Seek balance in all things today. Your charm will help smooth over any conflicts.",
+    tomorrow: "Tomorrow brings opportunities for collaboration. Your diplomatic nature will be appreciated."
+  },
+  scorpio: {
+    yesterday: "Your intensity brought transformation yesterday. Hidden truths came to light.",
+    today: "Trust your instincts today. Your determination will lead to meaningful discoveries.",
+    tomorrow: "Tomorrow brings powerful revelations. Your investigative nature will uncover opportunities."
+  },
+  sagittarius: {
+    yesterday: "Your optimism opened doors yesterday. Adventure brought valuable lessons.",
+    today: "Expand your horizons today. Your adventurous spirit will lead to exciting discoveries.",
+    tomorrow: "Tomorrow brings new adventures. Your optimistic outlook will create opportunities."
+  },
+  capricorn: {
+    yesterday: "Your discipline paid off yesterday. Structure brought success.",
+    today: "Focus on your long-term goals today. Your practical approach will yield results.",
+    tomorrow: "Tomorrow brings progress in your ambitions. Stay focused on your objectives."
+  },
+  aquarius: {
+    yesterday: "Your innovative ideas sparked change yesterday. Uniqueness was your strength.",
+    today: "Think outside the box today. Your unique perspective will bring fresh solutions.",
+    tomorrow: "Tomorrow brings revolutionary ideas. Your humanitarian spirit will inspire others."
+  },
+  pisces: {
+    yesterday: "Your compassion made a difference yesterday. Intuition guided you well.",
+    today: "Trust your inner voice today. Your creative inspiration will flow naturally.",
+    tomorrow: "Tomorrow brings spiritual insights. Your empathic nature will help others."
+  }
 }
 
 export async function getDailyHoroscope(sign, day = 'today', birthDate) {
   try {
-    // Get the description from Aztro API
-    const response = await fetch(
-      `https://aztro.sameerkumar.website/?sign=${sign}&day=${day}`,
-      {
-        method: 'POST'
-      }
-    )
-    
-    if (!response.ok) {
-      throw new Error('API request failed')
-    }
-    
-    const aztroData = await response.json()
-    
-    // Get consistent lucky properties from profile calculations
-    const luckyProps = calculateLuckyProperties(new Date(birthDate), sign.toLowerCase())
-    
-    return {
-      description: aztroData.description,
-      date: aztroData.current_date,
-      compatibility: luckyProps.compatibility,
-      mood: luckyProps.mood,
-      color: luckyProps.color,
-      lucky_number: luckyProps.lucky_number,
-      lucky_time: luckyProps.lucky_time
-    }
-  } catch (error) {
-    console.error('Error fetching horoscope:', error)
-    
-    // Use fallback data if API fails
     const signLower = sign.toLowerCase()
     const luckyProps = calculateLuckyProperties(new Date(birthDate), signLower)
     
+    // Get the appropriate description based on day
+    const description = horoscopeDescriptions[signLower][day]
+    
+    // Format date based on the selected day
+    const date = new Date()
+    if (day === 'yesterday') date.setDate(date.getDate() - 1)
+    if (day === 'tomorrow') date.setDate(date.getDate() + 1)
+    
     return {
-      description: fallbackDescriptions[signLower] || "Take time to reflect and plan your next steps wisely.",
-      date: new Date().toLocaleDateString('en-US', {
+      description,
+      date: date.toLocaleDateString('en-US', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -165,24 +91,23 @@ export async function getDailyHoroscope(sign, day = 'today', birthDate) {
       lucky_number: luckyProps.lucky_number,
       lucky_time: luckyProps.lucky_time
     }
+  } catch (error) {
+    console.error('Error generating horoscope:', error)
+    throw new Error('Failed to generate horoscope')
   }
 }
 
-// Cache horoscope data to avoid too many API calls
+// Cache horoscope data
 const horoscopeCache = new Map()
 
 export async function getCachedHoroscope(sign, day = 'today', birthDate) {
   const cacheKey = `${sign}-${day}-${new Date().toDateString()}`
   
-  // Check if we have cached data and it's from today
   if (horoscopeCache.has(cacheKey)) {
     return horoscopeCache.get(cacheKey)
   }
   
-  // Fetch fresh data
   const data = await getDailyHoroscope(sign, day, birthDate)
-  
-  // Cache the data
   horoscopeCache.set(cacheKey, data)
   
   return data
