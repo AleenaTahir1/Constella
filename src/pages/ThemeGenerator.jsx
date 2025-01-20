@@ -7,6 +7,7 @@ export default function ThemeGenerator() {
   const [generatedImage, setGeneratedImage] = useState(null)
   const [opacity, setOpacity] = useState(0.7)
   const [loading, setLoading] = useState(false)
+  const [previewTheme, setPreviewTheme] = useState(null)
 
   const handleGenerateTheme = async () => {
     if (!prompt.trim()) {
@@ -17,12 +18,9 @@ export default function ThemeGenerator() {
     try {
       setLoading(true)
       const imageUrl = await generateThemeImage(prompt)
-      console.log('Generated theme URL:', imageUrl) // Debug log
-      
-      // Set the image and immediately apply it
+      console.log('Generated theme URL:', imageUrl)
       setGeneratedImage(imageUrl)
-      applyTheme(imageUrl, opacity)
-      
+      setPreviewTheme(imageUrl)
     } catch (error) {
       console.error('Error generating theme:', error)
       alert('Failed to generate theme. Please try again.')
@@ -33,15 +31,17 @@ export default function ThemeGenerator() {
 
   const handleOpacityChange = (newOpacity) => {
     setOpacity(newOpacity)
-    if (generatedImage) {
-      applyTheme(generatedImage, newOpacity)
-    }
   }
 
   const handleDefaultTheme = (themeUrl) => {
-    console.log('Applying default theme:', themeUrl) // Debug log
+    setPreviewTheme(themeUrl)
     setGeneratedImage(themeUrl)
-    applyTheme(themeUrl, opacity)
+  }
+
+  const handleApplyTheme = () => {
+    if (generatedImage) {
+      applyTheme(generatedImage, opacity)
+    }
   }
 
   return (
@@ -91,7 +91,7 @@ export default function ThemeGenerator() {
             </div>
 
             {/* Theme Preview */}
-            {generatedImage && (
+            {previewTheme && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -99,8 +99,8 @@ export default function ThemeGenerator() {
               >
                 <div className="relative aspect-video rounded-lg overflow-hidden">
                   <img
-                    src={generatedImage}
-                    alt="Generated theme"
+                    src={previewTheme}
+                    alt="Theme preview"
                     className="w-full h-full object-cover"
                   />
                   <div 
@@ -129,7 +129,7 @@ export default function ThemeGenerator() {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={() => handleDefaultTheme(generatedImage)}
+                  onClick={handleApplyTheme}
                   className="w-full py-3 bg-constellation-accent text-white rounded-lg hover:bg-constellation-accent/80 transition-colors"
                 >
                   Apply Theme

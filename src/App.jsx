@@ -17,10 +17,14 @@ function App() {
 
   const handleThemeChange = useCallback((event) => {
     console.log('Theme change event received:', event.detail)
-    setBackground(event.detail.background)
-    setOpacity(event.detail.opacity)
-    // Hide particles when a theme is applied
-    setShowParticles(false)
+    if (event.detail.background) {
+      setBackground(event.detail.background)
+      setOpacity(event.detail.opacity)
+      setShowParticles(false)
+    } else {
+      setBackground(null)
+      setShowParticles(true)
+    }
   }, [])
 
   useEffect(() => {
@@ -30,6 +34,8 @@ function App() {
       setBackground(savedTheme)
       setOpacity(parseFloat(localStorage.getItem('constella-theme-opacity')) || 0.7)
       setShowParticles(false)
+    } else {
+      setShowParticles(true)
     }
 
     // Listen for theme changes
@@ -68,7 +74,7 @@ function App() {
       {/* Dark Overlay */}
       <div className="fixed inset-0 bg-gradient-to-b from-constellation-dark/50 to-constellation-dark/70 pointer-events-none" />
       
-      {/* Particle Effects - Only show when no theme is applied */}
+      {/* Particle Effects - Show by default and when no theme is applied */}
       {showParticles && (
         <div className="fixed inset-0 pointer-events-none">
           <ParticleField />
