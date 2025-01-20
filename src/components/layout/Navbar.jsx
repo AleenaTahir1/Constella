@@ -18,23 +18,50 @@ function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <div className="relative w-8 h-8">
-              <div className="absolute inset-0 bg-constellation-accent rounded-full opacity-50 blur-sm" />
-              <div className="absolute inset-0 bg-gradient-to-r from-constellation-accent to-purple-500 rounded-full" />
-              <div className="absolute inset-1 bg-constellation-dark rounded-full" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div
-                  className="w-1 h-1 bg-constellation-accent rounded-full"
-                  animate={{
-                    scale: [1, 1.5, 1],
-                    opacity: [1, 0.8, 1],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-              </div>
+              <svg viewBox="0 0 24 24" className="w-full h-full">
+                <g>
+                  {/* Main constellation points */}
+                  <circle cx="12" cy="6" r="1.5" className="fill-constellation-accent" />
+                  <circle cx="6" cy="12" r="1.5" className="fill-constellation-accent" />
+                  <circle cx="18" cy="12" r="1.5" className="fill-constellation-accent" />
+                  <circle cx="12" cy="18" r="1.5" className="fill-constellation-accent" />
+                  
+                  {/* Connecting lines */}
+                  <motion.path
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{
+                      duration: 2,
+                      ease: "easeInOut",
+                      repeat: Infinity,
+                      repeatType: "reverse"
+                    }}
+                    d="M12 6L6 12L12 18L18 12L12 6"
+                    className="stroke-constellation-accent"
+                    fill="none"
+                    strokeWidth="0.5"
+                  />
+                  
+                  {/* Glowing effect */}
+                  <motion.circle
+                    cx="12"
+                    cy="12"
+                    r="8"
+                    className="stroke-constellation-accent/30"
+                    fill="none"
+                    strokeWidth="0.5"
+                    animate={{
+                      scale: [1, 1.2, 1],
+                      opacity: [0.3, 0.1, 0.3]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                </g>
+              </svg>
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-constellation-accent to-purple-400 bg-clip-text text-transparent">
               Constella
