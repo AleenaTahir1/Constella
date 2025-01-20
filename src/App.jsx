@@ -8,14 +8,12 @@ import NotFound from './pages/NotFound'
 import ParticleField from './components/effects/ParticleField'
 import Navbar from './components/layout/Navbar'
 import { useEffect } from 'react'
+import { loadSavedTheme } from './services/themeGeneratorService'
 
 function App() {
-  // Load saved theme on startup
+  // Load saved theme or default theme on startup
   useEffect(() => {
-    const savedTheme = localStorage.getItem('constella-theme-background')
-    if (savedTheme) {
-      document.documentElement.style.setProperty('--theme-background', `url(${savedTheme})`)
-    }
+    loadSavedTheme()
   }, [])
 
   return (
