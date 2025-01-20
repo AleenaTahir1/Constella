@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useZodiac } from '../context/ZodiacContext'
-import { calculateLuckyProperties } from '../services/astrologicalCalculations'
+import { getCachedHoroscope } from '../services/dailyHoroscopeService'
 import { motion, AnimatePresence } from 'framer-motion'
-import { horoscopeDescriptions } from '../data/zodiacData'
 
 function Horoscope() {
   const { userZodiac, birthDate } = useZodiac()
@@ -23,25 +22,10 @@ function Horoscope() {
         setLoading(true)
         setError(null)
         
-        // Use the same calculations as profile page
-        const luckyProps = calculateLuckyProperties(new Date(birthDate), userZodiac.toLowerCase())
-        
-        setHoroscope({
-          description: horoscopeDescriptions[userZodiac.toLowerCase()],
-          date: new Date().toLocaleDateString('en-US', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          }),
-          compatibility: luckyProps.compatibility,
-          mood: luckyProps.mood,
-          color: luckyProps.color,
-          lucky_number: luckyProps.lucky_number,
-          lucky_time: luckyProps.lucky_time
-        })
+        const data = await getCachedHoroscope(userZodiac, selectedDay, birthDate)
+        setHoroscope(data)
       } catch (error) {
-        console.error('Failed to calculate horoscope:', error)
+        console.error('Failed to fetch horoscope:', error)
         setError('Failed to load your horoscope. Please try again later.')
       } finally {
         setLoading(false)
@@ -74,7 +58,7 @@ function Horoscope() {
 
         {/* Day Selection */}
         <div className="flex justify-center space-x-4 mb-12">
-          {['today', 'tomorrow', 'yesterday'].map((day) => (
+          {['yesterday', 'today', 'tomorrow'].map((day) => (
             <button
               key={day}
               onClick={() => setSelectedDay(day)}

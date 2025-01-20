@@ -98,9 +98,11 @@ const fallbackHoroscopes = {
   }
 }
 
-export async function getDailyHoroscope(sign, day = 'today') {
+import { calculateLuckyProperties } from './astrologicalCalculations'
+
+export async function getDailyHoroscope(sign, day = 'today', birthDate) {
   try {
-    // First try the Aztro API
+    // Get the description from Aztro API
     const response = await fetch(
       `https://aztro.sameerkumar.website/?sign=${sign}&day=${day}`,
       {
@@ -115,42 +117,30 @@ export async function getDailyHoroscope(sign, day = 'today') {
       throw new Error('API request failed')
     }
     
-    const data = await response.json()
+    const aztroData = await response.json()
+    
+    // Get consistent lucky properties from profile calculations
+    const luckyProps = calculateLuckyProperties(new Date(birthDate), sign.toLowerCase())
+    
     return {
-      description: data.description,
-      date: data.current_date,
-      compatibility: data.compatibility,
-      mood: data.mood,
-      color: data.color,
-      lucky_number: data.lucky_number,
-      lucky_time: data.lucky_time
+      description: aztroData.description,
+      date: aztroData.current_date,
+      compatibility: luckyProps.compatibility,
+      mood: luckyProps.mood,
+      color: luckyProps.color,
+      lucky_number: luckyProps.lucky_number,
+      lucky_time: luckyProps.lucky_time
     }
   } catch (error) {
-    console.error('Error fetching from Aztro API:', error)
-    
-    // Use fallback data if API fails
-    const signLower = sign.toLowerCase()
-    if (fallbackHoroscopes[signLower]) {
-      const today = new Date()
-      return {
-        ...fallbackHoroscopes[signLower],
-        date: today.toLocaleDateString('en-US', {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        })
-      }
-    }
-    
-    throw new Error('Failed to get horoscope data')
+    console.error('Error fetching horoscope:', error)
+    throw error
   }
 }
 
 // Cache horoscope data to avoid too many API calls
 const horoscopeCache = new Map()
 
-export async function getCachedHoroscope(sign, day = 'today') {
+export async function getCachedHoroscope(sign, day = 'today', birthDate) {
   const cacheKey = `${sign}-${day}`
   
   // Check if we have cached data and it's from today
@@ -170,7 +160,7 @@ export async function getCachedHoroscope(sign, day = 'today') {
   }
   
   // Fetch fresh data
-  const data = await getDailyHoroscope(sign, day)
+  const data = await getDailyHoroscope(sign, day, birthDate)
   
   // Cache the data with timestamp
   horoscopeCache.set(cacheKey, {
