@@ -32,20 +32,23 @@ export function applyTheme(imageUrl, opacity = 0.25) {
       return
     }
 
-    // Clean up the URL and create the CSS value
+    // Clean up the URL
     const cleanUrl = imageUrl.trim()
-    const cssValue = `url('${cleanUrl}')`
-    
-    // Apply the theme to the root element
-    document.documentElement.style.setProperty('--theme-background', cssValue)
-    document.documentElement.style.setProperty('--theme-opacity', opacity.toString())
     
     // Save to localStorage
     localStorage.setItem('constella-theme-background', cleanUrl)
     localStorage.setItem('constella-theme-opacity', opacity.toString())
     
+    // Dispatch theme change event
+    window.dispatchEvent(new CustomEvent('themeChanged', {
+      detail: {
+        background: cleanUrl,
+        opacity: opacity
+      }
+    }))
+    
     console.log('Theme applied successfully:', {
-      background: cssValue,
+      background: cleanUrl,
       opacity: opacity
     })
   } catch (error) {

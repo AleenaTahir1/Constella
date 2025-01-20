@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { generateThemeImage, applyTheme, DEFAULT_THEMES } from '../services/themeGeneratorService'
 
-function ThemeGenerator() {
+export default function ThemeGenerator() {
   const [prompt, setPrompt] = useState('')
   const [generatedImage, setGeneratedImage] = useState(null)
   const [opacity, setOpacity] = useState(0.25)
@@ -31,10 +31,10 @@ function ThemeGenerator() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-constellation-dark via-constellation-dark/95 to-constellation-dark py-12 px-4">
+    <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto space-y-8">
         <section className="space-y-4">
-          <h1 className="text-3xl font-bold text-center mb-8">Cosmic Theme Generator</h1>
+          <h1 className="text-3xl font-bold text-center mb-8">Theme Generator</h1>
           
           {/* Default Themes */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
@@ -42,7 +42,7 @@ function ThemeGenerator() {
               <motion.div
                 key={name}
                 whileHover={{ scale: 1.05 }}
-                className="relative rounded-lg overflow-hidden cursor-pointer"
+                className="relative rounded-lg overflow-hidden cursor-pointer group"
                 onClick={() => handleDefaultTheme(url)}
               >
                 <img
@@ -50,7 +50,7 @@ function ThemeGenerator() {
                   alt={name}
                   className="w-full h-48 object-cover"
                 />
-                <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity">
                   <span className="text-white font-semibold capitalize">{name}</span>
                 </div>
               </motion.div>
@@ -83,11 +83,11 @@ function ThemeGenerator() {
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-4"
               >
-                <div className="relative rounded-lg overflow-hidden">
+                <div className="relative aspect-video rounded-lg overflow-hidden">
                   <img
                     src={generatedImage}
                     alt="Generated theme"
-                    className="w-full h-64 object-cover"
+                    className="w-full h-full object-cover"
                   />
                   <div 
                     className="absolute inset-0"
@@ -107,7 +107,7 @@ function ThemeGenerator() {
                     step="0.05"
                     value={opacity}
                     onChange={(e) => setOpacity(parseFloat(e.target.value))}
-                    className="w-full"
+                    className="w-full accent-constellation-accent"
                   />
                 </div>
 
@@ -128,5 +128,3 @@ function ThemeGenerator() {
     </div>
   )
 }
-
-export default ThemeGenerator

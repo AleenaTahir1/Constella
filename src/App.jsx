@@ -7,30 +7,46 @@ import ThemeGenerator from './pages/ThemeGenerator'
 import NotFound from './pages/NotFound'
 import ParticleField from './components/effects/ParticleField'
 import Navbar from './components/layout/Navbar'
-import { useEffect } from 'react'
-import { loadSavedTheme } from './services/themeGeneratorService'
+import { useEffect, useState } from 'react'
+import { loadSavedTheme, DEFAULT_THEMES } from './services/themeGeneratorService'
 
 function App() {
+  const [background, setBackground] = useState(DEFAULT_THEMES.cosmic)
+  const [opacity, setOpacity] = useState(0.25)
+
   useEffect(() => {
-    loadSavedTheme()
+    // Load saved theme on startup
+    const savedBg = localStorage.getItem('constella-theme-background')
+    const savedOpacity = localStorage.getItem('constella-theme-opacity')
+    
+    if (savedBg) {
+      setBackground(savedBg)
+      setOpacity(parseFloat(savedOpacity) || 0.25)
+    }
+
+    // Listen for theme changes
+    window.addEventListener('themeChanged', (e) => {
+      setBackground(e.detail.background)
+      setOpacity(e.detail.opacity)
+    })
   }, [])
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-constellation-dark">
       {/* Theme Background */}
       <div 
         className="fixed inset-0 bg-cover bg-center bg-no-repeat transition-all duration-500"
         style={{ 
-          backgroundImage: 'var(--theme-background)',
-          opacity: 'var(--theme-opacity, 0.25)'
+          backgroundImage: `url('${background}')`,
+          opacity: opacity
         }}
       />
       
       {/* Dark Overlay */}
-      <div className="fixed inset-0 bg-gradient-to-b from-constellation-dark/90 to-constellation-dark/95" />
+      <div className="fixed inset-0 bg-gradient-to-b from-constellation-dark/90 to-constellation-dark/95 pointer-events-none" />
       
       {/* Particle Effects */}
-      <div className="fixed inset-0">
+      <div className="fixed inset-0 pointer-events-none">
         <ParticleField />
       </div>
 
