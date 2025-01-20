@@ -7,36 +7,31 @@ import ThemeGenerator from './pages/ThemeGenerator'
 import NotFound from './pages/NotFound'
 import ParticleField from './components/effects/ParticleField'
 import Navbar from './components/layout/Navbar'
-import { useEffect, useState } from 'react'
-import { loadSavedTheme, DEFAULT_THEMES } from './services/themeGeneratorService'
+import { useEffect } from 'react'
+import { loadSavedTheme } from './services/themeGeneratorService'
 
 function App() {
-  const [themeLoaded, setThemeLoaded] = useState(false)
-
   useEffect(() => {
-    // Load saved theme or default theme on startup
     loadSavedTheme()
-    setThemeLoaded(true)
   }, [])
 
   return (
-    <div className="min-h-screen flex flex-col relative">
-      {/* Background Layers */}
-      <div className="fixed inset-0 z-0">
-        {/* Theme Background */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-500"
-          style={{
-            backgroundImage: themeLoaded ? 'var(--theme-background)' : `url(${DEFAULT_THEMES.cosmic})`,
-            opacity: 'var(--theme-opacity, 0.25)'
-          }}
-        />
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-constellation-dark/90 to-constellation-dark/95" />
-        {/* Particle Effects */}
-        <div className="absolute inset-0">
-          <ParticleField />
-        </div>
+    <div className="min-h-screen flex flex-col">
+      {/* Theme Background */}
+      <div 
+        className="fixed inset-0 bg-cover bg-center bg-no-repeat transition-all duration-500"
+        style={{ 
+          backgroundImage: 'var(--theme-background)',
+          opacity: 'var(--theme-opacity, 0.25)'
+        }}
+      />
+      
+      {/* Dark Overlay */}
+      <div className="fixed inset-0 bg-gradient-to-b from-constellation-dark/90 to-constellation-dark/95" />
+      
+      {/* Particle Effects */}
+      <div className="fixed inset-0">
+        <ParticleField />
       </div>
 
       {/* Content */}

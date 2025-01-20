@@ -26,31 +26,36 @@ export async function generateThemeImage(prompt) {
 
 export function applyTheme(imageUrl, opacity = 0.25) {
   try {
-    // Ensure the image URL is properly formatted for CSS
-    const formattedUrl = imageUrl.includes('"') ? imageUrl : `"${imageUrl}"`
-    const backgroundValue = `url(${formattedUrl})`
+    // Ensure we have a valid image URL
+    if (!imageUrl) {
+      console.error('No image URL provided')
+      return
+    }
+
+    // Clean up the URL and create the CSS value
+    const cleanUrl = imageUrl.trim()
+    const cssValue = `url('${cleanUrl}')`
     
-    // Apply theme to root element
-    document.documentElement.style.setProperty('--theme-background', backgroundValue)
+    // Apply the theme to the root element
+    document.documentElement.style.setProperty('--theme-background', cssValue)
     document.documentElement.style.setProperty('--theme-opacity', opacity.toString())
     
-    // Save theme preferences
-    localStorage.setItem('constella-theme-background', imageUrl)
+    // Save to localStorage
+    localStorage.setItem('constella-theme-background', cleanUrl)
     localStorage.setItem('constella-theme-opacity', opacity.toString())
     
-    console.log('Theme applied:', {
-      background: backgroundValue,
+    console.log('Theme applied successfully:', {
+      background: cssValue,
       opacity: opacity
     })
   } catch (error) {
     console.error('Error applying theme:', error)
-    // If there's an error, try to apply the default theme
-    applyTheme(DEFAULT_THEMES.cosmic, opacity)
   }
 }
 
 export function loadSavedTheme() {
   try {
+    // Get saved theme or use default
     const savedTheme = localStorage.getItem('constella-theme-background')
     const savedOpacity = parseFloat(localStorage.getItem('constella-theme-opacity')) || 0.25
     
@@ -58,12 +63,12 @@ export function loadSavedTheme() {
       console.log('Loading saved theme:', savedTheme)
       applyTheme(savedTheme, savedOpacity)
     } else {
-      console.log('No saved theme found, applying default theme')
+      console.log('No saved theme found, applying default cosmic theme')
       applyTheme(DEFAULT_THEMES.cosmic, 0.25)
     }
   } catch (error) {
     console.error('Error loading theme:', error)
-    // If there's an error, apply the default theme
+    // Fallback to default theme
     applyTheme(DEFAULT_THEMES.cosmic, 0.25)
   }
 }
