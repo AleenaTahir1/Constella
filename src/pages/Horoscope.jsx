@@ -12,8 +12,14 @@ function Horoscope() {
 
   useEffect(() => {
     async function fetchHoroscope() {
-      if (!userZodiac || !birthDate) {
-        setError('Please set your birth date and zodiac sign first')
+      if (!userZodiac) {
+        setError('Please set your zodiac sign first')
+        setLoading(false)
+        return
+      }
+
+      if (!birthDate) {
+        setError('Please set your birth date first')
         setLoading(false)
         return
       }
@@ -21,7 +27,6 @@ function Horoscope() {
       try {
         setLoading(true)
         setError(null)
-        
         const data = await getCachedHoroscope(userZodiac, selectedDay, birthDate)
         setHoroscope(data)
       } catch (error) {
@@ -33,13 +38,13 @@ function Horoscope() {
     }
 
     fetchHoroscope()
-  }, [userZodiac, birthDate, selectedDay])
+  }, [userZodiac, selectedDay, birthDate])
 
-  if (!userZodiac) {
+  if (!userZodiac || !birthDate) {
     return (
       <div className="min-h-screen bg-constellation-dark flex items-center justify-center">
         <p className="text-constellation-light text-lg">
-          Please select your zodiac sign first
+          Please set your birth date and zodiac sign in your profile
         </p>
       </div>
     )

@@ -100,16 +100,29 @@ const fallbackHoroscopes = {
 
 import { calculateLuckyProperties } from './astrologicalCalculations'
 
+// Fallback data in case API fails
+const fallbackDescriptions = {
+  aries: "Today is a day of new beginnings. Your natural leadership abilities will shine through.",
+  taurus: "Focus on stability and growth today. Your practical nature will help you achieve your goals.",
+  gemini: "Communication is key today. Your adaptable nature will help you navigate challenges.",
+  cancer: "Trust your intuition today. Your emotional intelligence will guide you well.",
+  leo: "Your creative energy is at its peak. Express yourself boldly and confidently.",
+  virgo: "Pay attention to details today. Your analytical skills will prove valuable.",
+  libra: "Seek balance in all things today. Your diplomatic nature will help resolve conflicts.",
+  scorpio: "Trust your instincts today. Your determination will lead to success.",
+  sagittarius: "Adventure calls today. Your optimistic outlook will open new doors.",
+  capricorn: "Focus on your goals today. Your disciplined approach will yield results.",
+  aquarius: "Innovation is key today. Your unique perspective will bring fresh solutions.",
+  pisces: "Listen to your inner voice today. Your intuitive nature will guide you well."
+}
+
 export async function getDailyHoroscope(sign, day = 'today', birthDate) {
   try {
     // Get the description from Aztro API
     const response = await fetch(
       `https://aztro.sameerkumar.website/?sign=${sign}&day=${day}`,
       {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        method: 'POST'
       }
     )
     
@@ -133,7 +146,25 @@ export async function getDailyHoroscope(sign, day = 'today', birthDate) {
     }
   } catch (error) {
     console.error('Error fetching horoscope:', error)
-    throw error
+    
+    // Use fallback data if API fails
+    const signLower = sign.toLowerCase()
+    const luckyProps = calculateLuckyProperties(new Date(birthDate), signLower)
+    
+    return {
+      description: fallbackDescriptions[signLower] || "Take time to reflect and plan your next steps wisely.",
+      date: new Date().toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      }),
+      compatibility: luckyProps.compatibility,
+      mood: luckyProps.mood,
+      color: luckyProps.color,
+      lucky_number: luckyProps.lucky_number,
+      lucky_time: luckyProps.lucky_time
+    }
   }
 }
 
@@ -141,32 +172,18 @@ export async function getDailyHoroscope(sign, day = 'today', birthDate) {
 const horoscopeCache = new Map()
 
 export async function getCachedHoroscope(sign, day = 'today', birthDate) {
-  const cacheKey = `${sign}-${day}`
+  const cacheKey = `${sign}-${day}-${new Date().toDateString()}`
   
   // Check if we have cached data and it's from today
   if (horoscopeCache.has(cacheKey)) {
-    const cachedData = horoscopeCache.get(cacheKey)
-    const cacheDate = new Date(cachedData.timestamp)
-    const now = new Date()
-    
-    // Use cache if it's from the same day
-    if (
-      cacheDate.getDate() === now.getDate() &&
-      cacheDate.getMonth() === now.getMonth() &&
-      cacheDate.getFullYear() === now.getFullYear()
-    ) {
-      return cachedData.data
-    }
+    return horoscopeCache.get(cacheKey)
   }
   
   // Fetch fresh data
   const data = await getDailyHoroscope(sign, day, birthDate)
   
-  // Cache the data with timestamp
-  horoscopeCache.set(cacheKey, {
-    data,
-    timestamp: new Date()
-  })
+  // Cache the data
+  horoscopeCache.set(cacheKey, data)
   
   return data
 }
