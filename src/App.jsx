@@ -11,18 +11,26 @@ import { useEffect, useState, useCallback } from 'react'
 import { loadSavedTheme, DEFAULT_THEMES } from './services/themeGeneratorService'
 
 function App() {
-  const [background, setBackground] = useState(DEFAULT_THEMES.cosmic)
+  const [background, setBackground] = useState(null)
   const [opacity, setOpacity] = useState(0.7)
+  const [showParticles, setShowParticles] = useState(true)
 
   const handleThemeChange = useCallback((event) => {
     console.log('Theme change event received:', event.detail)
     setBackground(event.detail.background)
     setOpacity(event.detail.opacity)
+    // Hide particles when a theme is applied
+    setShowParticles(false)
   }, [])
 
   useEffect(() => {
     // Load saved theme on startup
-    loadSavedTheme()
+    const savedTheme = localStorage.getItem('constella-theme-background')
+    if (savedTheme) {
+      setBackground(savedTheme)
+      setOpacity(parseFloat(localStorage.getItem('constella-theme-opacity')) || 0.7)
+      setShowParticles(false)
+    }
 
     // Listen for theme changes
     window.addEventListener('themeChanged', handleThemeChange)
@@ -44,24 +52,28 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col bg-constellation-dark">
       {/* Theme Background */}
-      <div 
-        className="fixed inset-0 bg-cover bg-center bg-no-repeat transition-all duration-500"
-        style={{ 
-          backgroundImage: `url('${background}')`,
-          opacity: opacity,
-          transform: 'scale(1.1)', // Slight zoom for better coverage
-          filter: 'brightness(1.1) contrast(1.1)', // Enhanced visuals
-          willChange: 'opacity, background-image' // Performance optimization
-        }}
-      />
+      {background && (
+        <div 
+          className="fixed inset-0 bg-cover bg-center bg-no-repeat transition-all duration-500"
+          style={{ 
+            backgroundImage: `url('${background}')`,
+            opacity: opacity,
+            transform: 'scale(1.1)', // Slight zoom for better coverage
+            filter: 'brightness(1.1) contrast(1.1)', // Enhanced visuals
+            willChange: 'opacity, background-image' // Performance optimization
+          }}
+        />
+      )}
       
       {/* Dark Overlay */}
       <div className="fixed inset-0 bg-gradient-to-b from-constellation-dark/50 to-constellation-dark/70 pointer-events-none" />
       
-      {/* Particle Effects */}
-      <div className="fixed inset-0 pointer-events-none">
-        <ParticleField />
-      </div>
+      {/* Particle Effects - Only show when no theme is applied */}
+      {showParticles && (
+        <div className="fixed inset-0 pointer-events-none">
+          <ParticleField />
+        </div>
+      )}
 
       {/* Content */}
       <div className="relative z-10 flex-1 flex flex-col">
