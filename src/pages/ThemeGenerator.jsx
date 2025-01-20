@@ -5,7 +5,7 @@ import { generateThemeImage, applyTheme, DEFAULT_THEMES } from '../services/them
 export default function ThemeGenerator() {
   const [prompt, setPrompt] = useState('')
   const [generatedImage, setGeneratedImage] = useState(null)
-  const [opacity, setOpacity] = useState(0.25)
+  const [opacity, setOpacity] = useState(0.7)
   const [loading, setLoading] = useState(false)
 
   const handleGenerateTheme = async () => {
@@ -13,6 +13,8 @@ export default function ThemeGenerator() {
       setLoading(true)
       const imageUrl = await generateThemeImage(prompt || 'cosmic night sky with stars')
       setGeneratedImage(imageUrl)
+      // Apply theme immediately when generated
+      applyTheme(imageUrl, opacity)
     } catch (error) {
       console.error('Error generating theme:', error)
     } finally {
@@ -28,6 +30,8 @@ export default function ThemeGenerator() {
 
   const handleDefaultTheme = (themeUrl) => {
     setGeneratedImage(themeUrl)
+    // Apply theme immediately when selected
+    applyTheme(themeUrl, opacity)
   }
 
   return (
@@ -103,10 +107,17 @@ export default function ThemeGenerator() {
                   <input
                     type="range"
                     min="0.1"
-                    max="0.5"
-                    step="0.05"
+                    max="1"
+                    step="0.1"
                     value={opacity}
-                    onChange={(e) => setOpacity(parseFloat(e.target.value))}
+                    onChange={(e) => {
+                      const newOpacity = parseFloat(e.target.value)
+                      setOpacity(newOpacity)
+                      // Apply opacity change immediately
+                      if (generatedImage) {
+                        applyTheme(generatedImage, newOpacity)
+                      }
+                    }}
                     className="w-full accent-constellation-accent"
                   />
                 </div>

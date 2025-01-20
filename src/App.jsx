@@ -12,7 +12,7 @@ import { loadSavedTheme, DEFAULT_THEMES } from './services/themeGeneratorService
 
 function App() {
   const [background, setBackground] = useState(DEFAULT_THEMES.cosmic)
-  const [opacity, setOpacity] = useState(0.25)
+  const [opacity, setOpacity] = useState(0.7)
 
   useEffect(() => {
     // Load saved theme on startup
@@ -21,7 +21,7 @@ function App() {
     
     if (savedBg) {
       setBackground(savedBg)
-      setOpacity(parseFloat(savedOpacity) || 0.25)
+      setOpacity(parseFloat(savedOpacity) || 0.7)
     }
 
     // Listen for theme changes
@@ -38,12 +38,14 @@ function App() {
         className="fixed inset-0 bg-cover bg-center bg-no-repeat transition-all duration-500"
         style={{ 
           backgroundImage: `url('${background}')`,
-          opacity: opacity
+          opacity: opacity,
+          transform: 'scale(1.1)', // Slight zoom for better coverage
+          filter: 'brightness(1.1) contrast(1.1)' // Enhanced visuals
         }}
       />
       
       {/* Dark Overlay */}
-      <div className="fixed inset-0 bg-gradient-to-b from-constellation-dark/90 to-constellation-dark/95 pointer-events-none" />
+      <div className="fixed inset-0 bg-gradient-to-b from-constellation-dark/50 to-constellation-dark/70 pointer-events-none" />
       
       {/* Particle Effects */}
       <div className="fixed inset-0 pointer-events-none">
